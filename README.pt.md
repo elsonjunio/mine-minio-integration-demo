@@ -58,7 +58,7 @@ MinIO   Keycloak       Redis
 ### 1. Clone este repositório
 
 ```bash
-git clone <url-deste-repo>
+git clone https://github.com/elsonjunio/mine-minio-integration-demo.git
 cd mine-build
 ```
 
