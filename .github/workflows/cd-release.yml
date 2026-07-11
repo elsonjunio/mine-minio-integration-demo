@@ -1,0 +1,51 @@
+name: CD Release
+
+on:
+  push:
+    tags: ['v*']
+
+env:
+  REGISTRY: registry.registry.svc.cluster.local:5000
+
+jobs:
+  build-and-push:
+    runs-on: self-hosted
+
+    strategy:
+      matrix:
+        service:
+          - name: mine-backend
+            context: ./backend
+          - name: mine-ui
+            context: ./ui
+          - name: mine-ai-backend
+            context: ./ai-backend
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Buildah
+        run: sudo apt-get update && sudo apt-get install -y buildah
+
+      - name: Configure Buildah for insecure registry
+        run: |
+          mkdir -p ~/.config/containers
+          printf '[[registry]]\nlocation = "%s"\ninsecure = true\n' "$REGISTRY" > ~/.config/containers/registries.conf
+
+      - name: Set version from tag
+        run: echo "VERSION=${GITHUB_REF_NAME}" >> $GITHUB_ENV
+
+      - name: Build
+        run: |
+          buildah --storage-driver vfs build \
+            --tls-verify=false \
+            --build-arg VERSION=${VERSION} \
+            -t "${REGISTRY}/${{ matrix.service.name }}:${VERSION}" \
+            -t "${REGISTRY}/${{ matrix.service.name }}:latest" \
+            -f Dockerfile \
+            "${{ matrix.service.context }}"
+
+      - name: Push
+        run: |
+          buildah push --tls-verify=false "${REGISTRY}/${{ matrix.service.name }}:${VERSION}"
+          buildah push --tls-verify=false "${REGISTRY}/${{ matrix.service.name }}:latest"
