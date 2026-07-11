@@ -1,5 +1,5 @@
 # -------- STAGE 1: build angular --------
-FROM node:20-alpine AS build
+FROM docker.io/library/node:20-alpine AS build
 
 ARG VERSION=v0.1.0
 WORKDIR /build
@@ -15,7 +15,7 @@ RUN npm install
 RUN npm run build
 
 # -------- STAGE 2: runtime --------
-FROM nginx:1.27-alpine
+FROM docker.io/library/nginx:1.27-alpine
 
 # remover config default
 RUN rm -rf /usr/share/nginx/html/*

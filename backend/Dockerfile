@@ -1,5 +1,5 @@
 # -------- build stage --------
-FROM python:3.11-slim AS builder
+FROM docker.io/library/python:3.11-slim AS builder
 
 ARG VERSION=v0.1.0
 
@@ -32,7 +32,7 @@ RUN pip install https://github.com/elsonjunio/mine-adapter-minio/releases/downlo
 
 
 # -------- runtime stage --------
-FROM python:3.11-slim
+FROM docker.io/library/python:3.11-slim
 
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1

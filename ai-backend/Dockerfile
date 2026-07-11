@@ -1,5 +1,5 @@
 # -------- build stage --------
-FROM python:3.11-slim AS builder
+FROM docker.io/library/python:3.11-slim AS builder
 
 ARG VERSION=v0.1.0
 
@@ -27,7 +27,7 @@ RUN poetry config virtualenvs.create false
 RUN poetry install --no-interaction --no-ansi --no-root
 
 # -------- runtime stage --------
-FROM python:3.11-slim
+FROM docker.io/library/python:3.11-slim
 
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
