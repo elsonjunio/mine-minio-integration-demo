@@ -27,10 +27,17 @@ jobs:
       - name: Install Buildah
         run: sudo apt-get update && sudo apt-get install -y buildah
 
-      - name: Configure Buildah for insecure registry
+      - name: Configure Buildah for registries
         run: |
           mkdir -p ~/.config/containers
-          printf '[[registry]]\nlocation = "%s"\ninsecure = true\n' "$REGISTRY" > ~/.config/containers/registries.conf
+          {
+            echo '[[registry]]'
+            echo "location = \"${REGISTRY}\""
+            echo 'insecure = true'
+            echo ''
+            echo '[[registry]]'
+            echo 'location = "docker.io"'
+          } > ~/.config/containers/registries.conf
 
       - name: Set image tag from git tag
         run: echo "IMAGE_TAG=${GITHUB_REF_NAME}" >> $GITHUB_ENV
