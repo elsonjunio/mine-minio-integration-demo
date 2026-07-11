@@ -51,10 +51,10 @@ COPY --from=builder /usr/local /usr/local
 # copiar backend
 COPY --from=builder /build/mine_backend ./mine_backend
 
-# copiar cliente mc do MinIO
-COPY --from=docker.io/library/minio/mc /usr/bin/mc /usr/bin/mc
-
-RUN chmod +x /usr/bin/mc
+# baixar cliente mc do MinIO (multi-arch)
+ARG TARGETARCH
+RUN curl -fsSL "https://dl.min.io/client/mc/release/linux-${TARGETARCH}/mc" -o /usr/bin/mc \
+    && chmod +x /usr/bin/mc
 
 EXPOSE 8000
 
