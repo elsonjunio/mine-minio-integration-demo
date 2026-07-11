@@ -52,7 +52,7 @@ COPY --from=builder /usr/local /usr/local
 COPY --from=builder /build/mine_backend ./mine_backend
 
 # copiar cliente mc do MinIO
-COPY --from=minio/mc /usr/bin/mc /usr/bin/mc
+COPY --from=docker.io/library/minio/mc /usr/bin/mc /usr/bin/mc
 
 RUN chmod +x /usr/bin/mc
 
