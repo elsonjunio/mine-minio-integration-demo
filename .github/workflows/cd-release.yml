@@ -32,20 +32,19 @@ jobs:
           mkdir -p ~/.config/containers
           printf '[[registry]]\nlocation = "%s"\ninsecure = true\n' "$REGISTRY" > ~/.config/containers/registries.conf
 
-      - name: Set version from tag
-        run: echo "VERSION=${GITHUB_REF_NAME}" >> $GITHUB_ENV
+      - name: Set image tag from git tag
+        run: echo "IMAGE_TAG=${GITHUB_REF_NAME}" >> $GITHUB_ENV
 
       - name: Build
         run: |
           buildah --storage-driver vfs build \
             --tls-verify=false \
-            --build-arg VERSION=${VERSION} \
-            -t "${REGISTRY}/${{ matrix.service.name }}:${VERSION}" \
+            -t "${REGISTRY}/${{ matrix.service.name }}:${IMAGE_TAG}" \
             -t "${REGISTRY}/${{ matrix.service.name }}:latest" \
             -f Dockerfile \
             "${{ matrix.service.context }}"
 
       - name: Push
         run: |
-          buildah push --tls-verify=false "${REGISTRY}/${{ matrix.service.name }}:${VERSION}"
+          buildah push --tls-verify=false "${REGISTRY}/${{ matrix.service.name }}:${IMAGE_TAG}"
           buildah push --tls-verify=false "${REGISTRY}/${{ matrix.service.name }}:latest"
