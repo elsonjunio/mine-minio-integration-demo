@@ -2,6 +2,8 @@
 
 # Mine Build — Console de Armazenamento
 
+(https://docs.min.io/aistor/administration/iam/access/)
+
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
 
 Plataforma de gerenciamento de armazenamento S3-compatível, auto-hospedada, construída sobre o MinIO. Inclui autenticação via Keycloak, backend Python (FastAPI), frontend Angular e um agente de IA opcional.
