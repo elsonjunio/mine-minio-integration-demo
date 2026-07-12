@@ -23,7 +23,7 @@ RUN rm -rf /usr/share/nginx/html/*
 # copiar build
 COPY --from=build /build/mine_ui/dist/mine_ui/browser /usr/share/nginx/html
 
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+COPY nginx.conf /etc/nginx/conf.d/default.conf.template
 
 # copiar entrypoint
 COPY entrypoint.sh /entrypoint.sh

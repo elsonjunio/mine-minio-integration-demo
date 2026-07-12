@@ -1,6 +1,7 @@
 #!/bin/sh
 set -e
 
+# --- config.json for Angular ---
 CONFIG_FILE=/usr/share/nginx/html/config.json
 
 cat <<EOF > $CONFIG_FILE
@@ -15,5 +16,14 @@ EOF
 
 echo "Config generated:"
 cat $CONFIG_FILE
+
+# --- nginx.conf from template ---
+export NGINX_RESOLVER="${NGINX_RESOLVER:-127.0.0.11}"
+export NGINX_BACKEND_URL="${NGINX_BACKEND_URL:-http://backend:8000}"
+export NGINX_AGENT_URL="${NGINX_AGENT_URL:-http://agent:8000}"
+
+envsubst '${NGINX_RESOLVER} ${NGINX_BACKEND_URL} ${NGINX_AGENT_URL}' \
+  < /etc/nginx/conf.d/default.conf.template \
+  > /etc/nginx/conf.d/default.conf
 
 exec "$@"
