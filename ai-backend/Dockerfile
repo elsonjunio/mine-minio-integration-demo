@@ -1,7 +1,7 @@
 # -------- build stage --------
 FROM docker.io/library/python:3.11-slim AS builder
 
-ARG VERSION=v0.1.0
+ARG VERSION=v0.1.6
 
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1

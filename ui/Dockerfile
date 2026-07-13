@@ -1,7 +1,7 @@
 # -------- STAGE 1: build angular --------
 FROM docker.io/library/node:20-alpine AS build
 
-ARG VERSION=v0.1.0
+ARG VERSION=v0.1.6
 WORKDIR /build
 
 RUN apk add --no-cache git

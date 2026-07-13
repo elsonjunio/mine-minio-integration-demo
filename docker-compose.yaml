@@ -63,7 +63,7 @@ services:
     build:
       context: ./backend
       args:
-        VERSION: v0.1.3
+        VERSION: v0.1.6
     container_name: mine-backend
     ports:
       - "8000:8000"
@@ -142,7 +142,7 @@ services:
     build:
       context: ./ui
       args:
-        VERSION: v0.1.4
+        VERSION: v0.1.6
     container_name: mine-ui
     ports:
       - "8080:80"
