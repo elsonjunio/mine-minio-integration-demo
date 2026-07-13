@@ -27,7 +27,7 @@ RUN poetry config virtualenvs.create false
 RUN poetry install --no-interaction --no-ansi --no-root
 
 # copiar port do MinIO
-RUN pip install https://github.com/elsonjunio/mine-adapter-minio/releases/download/v0.1.4/mine_adapter_minio-0.1.4-py3-none-any.whl
+RUN pip install https://github.com/elsonjunio/mine-adapter-minio/releases/download/v0.1.6/mine_adapter_minio-0.1.6-py3-none-any.whl
 
 
 
